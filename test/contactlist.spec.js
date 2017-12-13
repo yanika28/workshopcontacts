@@ -37,3 +37,25 @@ describe('GET /contacts',()=>{
       })
     })
     })
+    describe('POST /contacts',()=>{
+      it('Post id:12 successfully 201',(done)=>{
+        request(router).post('/contacts')
+        .send([
+              {id:12,name:'Donlawat',email:'58160391@go.buu.ac.th',phone: '063-792-4546',url:'https://www.facebook.com/got.deelert' ,notes:'I Need Grade A' },
+             
+             ])
+        .expect(201)
+        .then((res)=>{
+          let contact = res.body
+          let contacts = contact[0]
+         expect(contact).toBeDefined()
+         expect(contacts.id).toBe(12)
+         expect(contacts.name).toBe('Donlawat')
+         expect(contacts.email).toBe('58160391@go.buu.ac.th')
+         expect(contacts.phone).toBe('063-792-4546')
+         expect(contacts.url).toBe('https://www.facebook.com/got.deelert')
+         expect(contacts.notes).toBe('I Need Grade A')
+          done()
+       })
+     })
+    })
