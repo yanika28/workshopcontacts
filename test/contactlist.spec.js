@@ -59,3 +59,26 @@ describe('GET /contacts',()=>{
        })
      })
     })
+
+    describe('PUT /contacts',()=>{
+      it('put id12 replace it id4 get Success',(done)=>{
+        request(router).put('/contacts/1')
+        .send({id:12,name:"Yanika",email:'58160381@go.buu.ac.th',phone: '086-840-0609',url:'https://www.facebook.com/yanika.boonprasert' ,notes:'ํYanikaHAHA' })
+        .expect(200)
+        .then((res)=>{
+          request(router).get('/contacts/1')
+          .then((res)=>{
+            let contact = res.body
+            expect(contact).toBeDefined()
+            expect(contact.id).toBe(12)
+            expect(contact.name).toBe("Yanika")
+            expect(contact.email).toBe('58160381@go.buu.ac.th')
+            expect(contact.phone).toBe('086-840-0609')
+            expect(contact.url).toBe('https://www.facebook.com/yanika.boonprasert')
+            expect(contact.notes).toBe('YanikaHAHA')
+          })
+          done()
+        })
+      })
+    })
+    
