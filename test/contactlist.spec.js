@@ -42,8 +42,8 @@ describe('GET /contacts',()=>{
         request(router).post('/contacts')
         .send([
               {id:12,name:'Donlawat',email:'58160391@go.buu.ac.th',phone: '063-792-4546',url:'https://www.facebook.com/got.deelert' ,notes:'I Need Grade A' },
-             
-             ])
+              {id:13,name:'yanika',email:'58160381@go.buu.ac.th',phone: '086-840-0609',url:'https://www.facebook.com/yanika.boonprasert' ,notes:'YanikaHAHA'}
+            ])
         .expect(201)
         .then((res)=>{
           let contact = res.body
@@ -55,6 +55,19 @@ describe('GET /contacts',()=>{
          expect(contacts.phone).toBe('063-792-4546')
          expect(contacts.url).toBe('https://www.facebook.com/got.deelert')
          expect(contacts.notes).toBe('I Need Grade A')
+
+
+        
+       let contact2 = contact[1]
+       expect(contact2.id).toBe(13)
+       expect(contact2.name).toBe('yanika')
+       expect(contact2.email).toBe('58160381@go.buu.ac.th')
+       expect(contact2.phone).toBe('086-840-0609')
+       expect(contact2.url).toBe('https://www.facebook.com/yanika.boonprasert')
+       expect(contact2.notes).toBe('YanikaHAHA')
+       
+
+
           done()
        })
      })
@@ -63,7 +76,7 @@ describe('GET /contacts',()=>{
     describe('PUT /contacts',()=>{
       it('put id12 replace it id4 get Success',(done)=>{
         request(router).put('/contacts/1')
-        .send({id:12,name:"Yanika",email:'58160381@go.buu.ac.th',phone: '086-840-0609',url:'https://www.facebook.com/yanika.boonprasert' ,notes:'ํYanikaHAHA' })
+        .send({id:12,name:"Donlawat",email:'58160391@go.buu.ac.th',phone: '063-792-4546',url:'https://www.facebook.com/got.deelert' ,notes:'I Need Grade A' })
         .expect(200)
         .then((res)=>{
           request(router).get('/contacts/1')
@@ -71,14 +84,30 @@ describe('GET /contacts',()=>{
             let contact = res.body
             expect(contact).toBeDefined()
             expect(contact.id).toBe(12)
-            expect(contact.name).toBe("Yanika")
-            expect(contact.email).toBe('58160381@go.buu.ac.th')
-            expect(contact.phone).toBe('086-840-0609')
-            expect(contact.url).toBe('https://www.facebook.com/yanika.boonprasert')
-            expect(contact.notes).toBe('YanikaHAHA')
+            expect(contact.name).toBe("Donlawat")
+            expect(contact.email).toBe('58160391@go.buu.ac.th')
+            expect(contact.phone).toBe('063-792-4546')
+            expect(contact.url).toBe('https://www.facebook.com/got.deelert')
+            expect(contact.notes).toBe('I Need Grade A')
           })
           done()
         })
       })
     })
     
+
+    describe('DELETE /contacts',()=>{
+      it('Delete id:4 must show Success',(done)=>{
+      request(router).delete('/contacts/4')
+      .expect(204)
+      .then((res)=>{
+      request(router).get('/contacts/4')
+      .then((res)=>{
+        let contact = res.body
+        expect(contact).toBeDefined()
+        expect(contact.id).not.toBe(4)
+      })
+        done()
+      })
+    })
+  })
